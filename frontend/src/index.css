@@ -1,0 +1,147 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@import "tailwindcss";
+
+@theme {
+  /* ALVERRO Luxury Color Palette */
+  --color-charcoal: #0E0E0F;
+  --color-charcoal-light: #1A1A1B;
+  
+  --color-emerald: #0F3E36;
+  --color-emerald-light: #1A5A4F;
+  --color-emerald-dark: #0A2B25;
+  
+  --color-burgundy: #4A0E1F;
+  --color-burgundy-light: #6B1A2F;
+  --color-burgundy-dark: #3A0B18;
+  
+  --color-gold: #C9A86A;
+  --color-gold-light: #D4B888;
+  --color-gold-dark: #B8964F;
+  
+  /* Note: Tailwind v4 converts kebab-case to camelCase for utilities */
+  /* So --color-warm-white generates bg-warmWhite, text-warmWhite, etc. */
+  --color-warm-white: #EDE8E3;
+  --color-warm-white-light: #F5F2EF;
+  --color-warm-white-dark: #E0D9D1;
+
+  /* Font Families */
+  --font-serif: 'Playfair Display', 'Cormorant', 'Lora', serif;
+  --font-sans: 'Inter', system-ui, sans-serif;
+}
+
+@layer base {
+  body {
+    background-color: #0E0E0F; /* charcoal */
+    color: #EDE8E3; /* warmWhite */
+    font-family: 'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    font-feature-settings: "kern" 1, "liga" 1;
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    font-family: var(--font-serif);
+  }
+
+  /* Smooth scrolling */
+  html {
+    scroll-behavior: smooth;
+  }
+
+  /* Custom scrollbar */
+  ::-webkit-scrollbar {
+    width: 8px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background-color: #1A1A1B; /* charcoal-light */
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background-color: #C9A86A; /* gold */
+    border-radius: 4px;
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background-color: #D4B888; /* gold-light */
+  }
+}
+
+@layer components {
+  /* Luxury button styles */
+  .btn-primary {
+    background-color: #C9A86A; /* gold */
+    color: #0E0E0F; /* charcoal */
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+  }
+  .btn-primary:hover {
+    background-color: #D4B888; /* gold-light */
+    box-shadow: 0 10px 15px -3px rgba(201, 168, 106, 0.2), 0 4px 6px -2px rgba(201, 168, 106, 0.1);
+  }
+
+  .btn-secondary {
+    border: 2px solid #C9A86A; /* gold */
+    color: #C9A86A; /* gold */
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+  }
+  .btn-secondary:hover {
+    background-color: #C9A86A; /* gold */
+    color: #0E0E0F; /* charcoal */
+  }
+
+  .btn-outline {
+    border: 2px solid #EDE8E3; /* warmWhite */
+    color: #EDE8E3; /* warmWhite */
+    padding: 0.75rem 2rem;
+    font-weight: 500;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    font-size: 0.875rem;
+    transition: all 0.3s;
+  }
+  .btn-outline:hover {
+    background-color: #EDE8E3; /* warmWhite */
+    color: #0E0E0F; /* charcoal */
+  }
+
+  /* Section spacing */
+  .section-padding {
+    @apply py-20 md:py-32;
+  }
+
+  /* Container */
+  .container-luxury {
+    @apply max-w-7xl mx-auto px-6 md:px-8 lg:px-12;
+  }
+
+  /* Text styles */
+  .heading-hero {
+    @apply text-5xl md:text-6xl lg:text-7xl xl:text-8xl font-serif font-bold tracking-tight;
+  }
+
+  .heading-section {
+    @apply text-3xl md:text-4xl lg:text-5xl font-serif font-semibold tracking-tight;
+  }
+
+  .text-luxury {
+    color: rgba(237, 232, 227, 0.9); /* warmWhite/90 */
+    @apply leading-relaxed;
+  }
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}

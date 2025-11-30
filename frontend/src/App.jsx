@@ -11,6 +11,7 @@ import Addresses from "./pages/account/Addresses";
 import Payments from "./pages/account/Payments";
 import Orders from "./pages/account/Orders";
 import Settings from "./pages/account/Settings";
+import About from "./pages/About";
 
 const App = () => {
   return (
@@ -19,6 +20,7 @@ const App = () => {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
             <Route path="/shop" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">Shop - Coming Soon</h1></div>} />
             <Route path="/collections" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">Collections - Coming Soon</h1></div>} />
             <Route path="/new-season" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">New Season - Coming Soon</h1></div>} />

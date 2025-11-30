@@ -11,6 +11,9 @@ import Addresses from "./pages/account/Addresses";
 import Payments from "./pages/account/Payments";
 import Orders from "./pages/account/Orders";
 import Settings from "./pages/account/Settings";
+// Yeni importlar
+import About from "./pages/About";
+import SizeGuide from "./pages/SizeGuide"; // <--- Burayı ekleyin
 
 const App = () => {
   return (
@@ -19,6 +22,10 @@ const App = () => {
         <Layout>
           <Routes>
             <Route path="/" element={<Home />} />
+            <Route path="/about" element={<About />} />
+            {/* Size Guide Route'unu buraya ekleyin */}
+            <Route path="/size-guide" element={<SizeGuide />} /> 
+
             <Route path="/shop" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">Shop - Coming Soon</h1></div>} />
             <Route path="/collections" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">Collections - Coming Soon</h1></div>} />
             <Route path="/new-season" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">New Season - Coming Soon</h1></div>} />

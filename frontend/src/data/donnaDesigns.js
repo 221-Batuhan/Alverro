@@ -25,7 +25,7 @@ const getCollectionByIndex = (index) => {
   if (index <= 17 && index >= 11) return { name: 'Ancient Beauty', slug: 'ancient-beauty' };
   if (index <= 29 && index >= 21) return { name: '21st Century', slug: '21st-century' };
   if (index <= 39 && index >= 31) return { name: 'Timeless Elegance', slug: 'timeless-elegance' };
-  if (index <= 49 && index >= 41) return { name: 'Bridal Collection', slug: 'bridal' };
+  if (index <= 48 && index >= 41) return { name: 'Bridal Collection', slug: 'bridal' };
   if (index <= 57 && index >= 51) return { name: 'Shoes', slug: 'shoes' };
   return {}; // 51-60
 };

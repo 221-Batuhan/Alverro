@@ -25,8 +25,8 @@ import AddressSelection from "./pages/checkout/AddressSelection";
 import Payment from "./pages/checkout/Payment";
 import Review from "./pages/checkout/Review";
 import Result from "./pages/checkout/Result";
-// Test Product
-import TestProduct from "./pages/TestProduct";
+import Careers from "./pages/Careers";
+import Shop from "./pages/Shop";
 
 const App = () => {
   return (
@@ -38,13 +38,12 @@ const App = () => {
               <Route path="/" element={<Home />} />
               <Route path="/about" element={<About />} />
               <Route path="/size-guide" element={<SizeGuide />} /> 
-
-              <Route path="/shop" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">Shop - Coming Soon</h1></div>} />
+              <Route path="/shop" element={<Shop />} />
               <Route path="/collections" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">Collections - Coming Soon</h1></div>} />
               <Route path="/new-season" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">New Season - Coming Soon</h1></div>} />
-              
+              <Route path="/careers" element={<Careers />} />
               {/* Test Product - Ödeme Testi */}
-              <Route path="/test-product" element={<TestProduct />} />
+            
               
               {/* Donna Routes */}
               <Route path="/donna" element={<Donna />} />
@@ -71,6 +70,7 @@ const App = () => {
               <Route path="/account/payments" element={<Payments />} />
               <Route path="/account/orders" element={<Orders />} />
               <Route path="/account/settings" element={<Settings />} />
+
             </Routes>
           </Layout>
         </Router>

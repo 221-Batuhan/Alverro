@@ -15,7 +15,14 @@ JWT_EXPIRE=30d
 PORT=5000
 FRONTEND_URL=http://localhost:5173
 NODE_ENV=development
+
+# Iyzico Sandbox Configuration
+IYZICO_API_KEY=your_iyzico_sandbox_api_key
+IYZICO_SECRET_KEY=your_iyzico_sandbox_secret_key
+IYZICO_CALLBACK_URL=http://localhost:5000/api/payments/iyzico/callback
 ```
+
+**Note:** Get your Iyzico Sandbox credentials from [Iyzico Developer Portal](https://dev.iyzipay.com/tr)
 
 3. Make sure MongoDB is running:
 ```bash
@@ -58,6 +65,19 @@ npm run dev
 ### Orders
 - `GET /api/user/orders` - Get order history (protected)
 
+### Payments (Iyzico)
+- `POST /api/payments/iyzico/initiate` - Initiate payment with Iyzico (protected)
+- `POST /api/payments/iyzico/callback` - Iyzico payment callback (public)
+- `GET /api/payments/status/:orderId` - Get payment status (protected)
+
+### Products
+- `GET /api/products` - Get all products (with optional filters: gender, line, category, isLimitedEdition, featured, search)
+- `GET /api/products/donna` - Get Donna products only (with optional filters: featured, isLimitedEdition)
+- `GET /api/products/:id` - Get single product by ID
+- `POST /api/products` - Create new product (Admin only)
+- `PUT /api/products/:id` - Update product (Admin only)
+- `DELETE /api/products/:id` - Delete product (Admin only)
+
 ## Troubleshooting
 
 ### MongoDB Connection Errors
@@ -71,4 +91,11 @@ npm run dev
 ### JWT Errors
 - Make sure JWT_SECRET is set in `.env`
 - Tokens are stored in HTTP-only cookies
+
+### Iyzico Payment Errors
+- Make sure IYZICO_API_KEY and IYZICO_SECRET_KEY are set in `.env`
+- Use Iyzico Sandbox test cards for testing
+- Test cards: 5528 7900 0000 0000 (Visa), 5456 1600 0000 0000 (Mastercard)
+- Expiry: Any future date (e.g., 12/25)
+- CVC: Any 3 digits (e.g., 123)
 

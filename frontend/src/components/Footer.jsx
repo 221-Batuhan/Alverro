@@ -4,7 +4,7 @@ import { Instagram, Facebook, Twitter } from "lucide-react";
 
 const Footer = () => {
   return (
-    <footer className="bg-charcoal-light border-t border-gold/10">
+    <footer className="bg-[black] border-t border-gold/10">
       <div className="container-luxury section-padding">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-12">
           {/* Brand Column */}
@@ -51,6 +51,11 @@ const Footer = () => {
               <li>
                 <Link to="/shop" className="text-warmWhite/70 hover:text-gold transition-colors duration-300 text-sm">
                   All Products
+                </Link>
+              </li>
+              <li>
+                <Link to="/donna" className="text-warmWhite/70 hover:text-gold transition-colors duration-300 text-sm">
+                  Donna
                 </Link>
               </li>
               <li>

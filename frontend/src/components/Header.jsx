@@ -34,6 +34,12 @@ const Header = () => {
               Shop
             </Link>
             <Link 
+              to="/donna" 
+              className="text-warmWhite/80 hover:text-gold transition-colors duration-300 uppercase"
+            >
+              Donna
+            </Link>
+            <Link 
               to="/new-season" 
               className="text-warmWhite/80 hover:text-gold transition-colors duration-300 uppercase"
             >
@@ -99,6 +105,13 @@ const Header = () => {
               className="block text-warmWhite/80 hover:text-gold transition-colors duration-300 uppercase text-sm tracking-wider py-2"
             >
               Shop
+            </Link>
+            <Link 
+              to="/donna" 
+              onClick={() => setIsMenuOpen(false)}
+              className="block text-warmWhite/80 hover:text-gold transition-colors duration-300 uppercase text-sm tracking-wider py-2"
+            >
+              Donna
             </Link>
             <Link 
               to="/new-season" 

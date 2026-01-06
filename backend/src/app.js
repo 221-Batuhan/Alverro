@@ -6,6 +6,9 @@ const connectDB = require('./config/database');
 const seasonRoutes = require('./routes/seasonRoutes');
 const authRoutes = require('./routes/authRoutes');
 const userRoutes = require('./routes/userRoutes');
+const paymentRoutes = require('./routes/paymentRoutes');
+const productRoutes = require('./routes/productRoutes');
+const donnaRoutes = require('./routes/donnaRoutes');
 
 const app = express();
 
@@ -27,6 +30,9 @@ app.use(cookieParser());
 app.use('/api/seasons', seasonRoutes);
 app.use('/api/auth', authRoutes);
 app.use('/api/user', userRoutes);
+app.use('/api/payments', paymentRoutes);
+app.use('/api/products', productRoutes);
+app.use('/api/donna', donnaRoutes);
 
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));

@@ -12,6 +12,13 @@ const iyzipayConfig = {
 const iyzipayClient = new iyzipay(iyzipayConfig);
 
 /**
+ * Helper to format dates to Iyzico requirements: YYYY-MM-DD HH:mm:ss
+ */
+const formatIyzicoDate = (date) => {
+  return date.toISOString().slice(0, 19).replace('T', ' ');
+};
+
+/**
  * Create payment request with Iyzico
  * @param {Object} paymentData - Payment information
  * @returns {Promise<Object>} Payment response
@@ -52,8 +59,9 @@ const createPaymentRequest = async (paymentData) => {
       gsmNumber: buyer.phone,
       email: buyer.email,
       identityNumber: buyer.identityNumber || '11111111111',
-      lastLoginDate: new Date().toISOString(),
-      registrationDate: new Date().toISOString(),
+      // Fix: Iyzico expects date in YYYY-MM-DD HH:mm:ss format
+      lastLoginDate: formatIyzicoDate(new Date()),
+      registrationDate: formatIyzicoDate(new Date()),
       registrationAddress: billingAddress.addressLine1,
       ip: buyer.ip || '127.0.0.1',
       city: billingAddress.city,
@@ -144,4 +152,3 @@ module.exports = {
   retrievePayment,
   extractSafePaymentData,
 };
-

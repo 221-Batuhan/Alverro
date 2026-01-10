@@ -47,7 +47,6 @@ const orderSchema = new mongoose.Schema({
     enum: ['pending', 'processing', 'shipped', 'delivered', 'cancelled'],
     default: 'pending',
   },
-  // Iyzico payment details (only safe data)
   paymentDetails: {
     last4Digits: { type: String },
     cardType: { type: String },
@@ -63,15 +62,19 @@ const orderSchema = new mongoose.Schema({
   timestamps: true,
 });
 
-// Generate unique order number before saving
-orderSchema.pre('save', async function(next) {
+/**
+ * Generate unique order number before validation.
+ * Using 'pre-validate' ensures the number is generated 
+ * BEFORE Mongoose checks the 'required: true' rule.
+ * * NOTE: We removed 'next' because this is an async function.
+ */
+orderSchema.pre('validate', async function() {
   if (!this.orderNumber) {
     const timestamp = Date.now();
     const random = Math.floor(Math.random() * 10000).toString().padStart(4, '0');
     this.orderNumber = `ALV-${timestamp}-${random}`;
   }
-  next();
+  // No next() call needed here
 });
 
 module.exports = mongoose.model('Order', orderSchema);
-

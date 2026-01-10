@@ -264,7 +264,7 @@ const Payment = () => {
           <div className="space-y-3 text-sm">
             <div className="bg-charcoal/50 p-3 rounded border border-emerald/20">
               <p className="text-warmWhite font-medium mb-1">Visa</p>
-              <p className="text-warmWhite/80 font-mono">5528 7900 0000 0000</p>
+              <p className="text-warmWhite/80 font-mono">5400 0100 0000 0004</p>
               <p className="text-warmWhite/60 text-xs mt-1">Expiry: Any future date (e.g., 12/25) • CVC: Any 3 digits (e.g., 123)</p>
             </div>
             <div className="bg-charcoal/50 p-3 rounded border border-emerald/20">
@@ -283,4 +283,3 @@ const Payment = () => {
 };
 
 export default Payment;
-

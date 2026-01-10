@@ -6,6 +6,7 @@ import { Mail, Lock, User, ArrowRight } from 'lucide-react';
 const Register = () => {
   const [formData, setFormData] = useState({
     name: '',
+    surname: '', // ✅ NEW
     email: '',
     password: '',
     confirmPassword: '',
@@ -41,8 +42,13 @@ const Register = () => {
     setIsLoading(true);
 
     try {
-      const result = await register(formData.name, formData.email, formData.password);
-      
+      const result = await register(
+        formData.name,
+        formData.surname, // ✅ NEW
+        formData.email,
+        formData.password
+      );
+
       if (result && result.success) {
         navigate('/account');
       } else {
@@ -72,6 +78,7 @@ const Register = () => {
               </div>
             )}
 
+            {/* Name */}
             <div>
               <label htmlFor="name" className="block text-warmWhite/80 text-sm font-medium mb-2 uppercase tracking-wider">
                 Full Name
@@ -86,11 +93,32 @@ const Register = () => {
                   onChange={handleChange}
                   required
                   className="w-full pl-12 pr-4 py-3 bg-charcoal border border-gold/20 text-warmWhite rounded-sm focus:outline-none focus:border-gold transition-colors"
-                  placeholder="John Doe"
+                  placeholder="John"
                 />
               </div>
             </div>
 
+            {/* Surname */}
+            <div>
+              <label htmlFor="surname" className="block text-warmWhite/80 text-sm font-medium mb-2 uppercase tracking-wider">
+                Surname
+              </label>
+              <div className="relative">
+                <User className="absolute left-4 top-1/2 transform -translate-y-1/2 w-5 h-5 text-gold/50" />
+                <input
+                  type="text"
+                  id="surname"
+                  name="surname"
+                  value={formData.surname}
+                  onChange={handleChange}
+                  required
+                  className="w-full pl-12 pr-4 py-3 bg-charcoal border border-gold/20 text-warmWhite rounded-sm focus:outline-none focus:border-gold transition-colors"
+                  placeholder="Doe"
+                />
+              </div>
+            </div>
+
+            {/* Email */}
             <div>
               <label htmlFor="email" className="block text-warmWhite/80 text-sm font-medium mb-2 uppercase tracking-wider">
                 Email
@@ -110,6 +138,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Password */}
             <div>
               <label htmlFor="password" className="block text-warmWhite/80 text-sm font-medium mb-2 uppercase tracking-wider">
                 Password
@@ -129,6 +158,7 @@ const Register = () => {
               </div>
             </div>
 
+            {/* Confirm Password */}
             <div>
               <label htmlFor="confirmPassword" className="block text-warmWhite/80 text-sm font-medium mb-2 uppercase tracking-wider">
                 Confirm Password
@@ -173,4 +203,3 @@ const Register = () => {
 };
 
 export default Register;
-

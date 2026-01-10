@@ -136,6 +136,7 @@ export const AuthProvider = ({ children }) => {
     updateUser,
     checkAuth,
   };
+  console.log("Current User State:", user);
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

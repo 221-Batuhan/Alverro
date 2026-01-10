@@ -15,22 +15,10 @@ const Review = () => {
   const [error, setError] = useState(null);
 
   useEffect(() => {
-    if (!user) {
-      navigate('/login');
-      return;
-    }
-    if (cart.length === 0) {
-      navigate('/checkout/cart');
-      return;
-    }
-    if (!checkoutData.address) {
-      navigate('/checkout/address');
-      return;
-    }
-    if (!checkoutData.paymentData) {
-      navigate('/checkout/payment');
-      return;
-    }
+    if (!user) { navigate('/login'); return; }
+    if (cart.length === 0) { navigate('/checkout/cart'); return; }
+    if (!checkoutData.address) { navigate('/checkout/address'); return; }
+    if (!checkoutData.paymentData) { navigate('/checkout/payment'); return; }
   }, [user, cart, checkoutData, navigate]);
 
   const handlePlaceOrder = async () => {
@@ -38,8 +26,13 @@ const Review = () => {
     setError(null);
 
     try {
-      // Prepare payment data for backend
-      // Iyzico expects 4-digit year (YYYY format)
+      // Logic to split the user name for Iyzico's mandatory surname requirement
+      const fullName = user?.name || "Alverro Client";
+      const nameParts = fullName.trim().split(" ");
+      const firstName = nameParts[0];
+      const lastName = nameParts.length > 1 ? nameParts.slice(1).join(" ") : "Client";
+
+      // Prepare 4-digit year for Iyzico
       const currentYear = new Date().getFullYear();
       const currentCentury = Math.floor(currentYear / 100) * 100;
       const enteredYear = parseInt(checkoutData.paymentData.expireYear);
@@ -53,14 +46,14 @@ const Review = () => {
         cvc: checkoutData.paymentData.cvc,
       };
 
-      // Prepare request payload
       const payload = {
         products: cart,
         address: checkoutData.address,
         cardData: paymentData,
+        surname: lastName, // Sending explicit surname
+        firstName: firstName
       };
 
-      // Call backend payment endpoint
       const response = await axios.post(
         `${API_URL}/payments/iyzico/initiate`,
         payload,
@@ -68,37 +61,26 @@ const Review = () => {
       );
 
       if (response.data.success) {
-        // Clear cart
         clearCart();
-        // Navigate to result page with order data
         navigate('/checkout/result', {
           state: {
             success: true,
             order: response.data.order,
-            message: 'Payment successful! Your order has been placed.',
+            message: 'Payment successful! Your shipment is being prepared.',
           },
         });
       } else {
-        // Payment failed - show error on Review page
-        const errorMessage = response.data.message || 'Payment failed. Please try again.';
-        setError(errorMessage);
+        setError(response.data.message || 'Payment failed. Please try again.');
         setIsProcessing(false);
       }
     } catch (error) {
       console.error('Payment error:', error);
-      const errorMessage = 
-        error.response?.data?.message ||
-        error.response?.data?.error ||
-        error.message ||
-        'An error occurred. Please try again.';
-      setError(errorMessage);
+      setError(error.response?.data?.message || 'An error occurred. Please try again.');
       setIsProcessing(false);
     }
   };
 
-  if (!checkoutData.address || !checkoutData.paymentData) {
-    return null;
-  }
+  if (!checkoutData.address || !checkoutData.paymentData) return null;
 
   return (
     <div className="section-padding container-luxury min-h-screen">
@@ -114,93 +96,36 @@ const Review = () => {
         <h1 className="heading-section text-warmWhite mb-12">Review Your Order</h1>
 
         <div className="space-y-8">
-          {/* Order Items */}
-          <div className="bg-charcoal-light border border-emerald/20 p-6 rounded-lg">
+          {/* Order Summary */}
+          <div className="bg-charcoal-light border border-gold/10 p-6 rounded-sm">
             <h2 className="text-xl font-serif text-warmWhite mb-6">Order Items</h2>
             <div className="space-y-4">
               {cart.map((item) => (
-                <div key={item.productId} className="flex items-center gap-4 pb-4 border-b border-emerald/10 last:border-0">
-                  {item.image && (
-                    <div className="w-20 h-20 bg-charcoal rounded-lg overflow-hidden flex-shrink-0">
-                      <img
-                        src={item.image}
-                        alt={item.name}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  )}
+                <div key={item.productId} className="flex items-center gap-4 pb-4 border-b border-gold/5 last:border-0">
                   <div className="flex-1">
                     <h3 className="text-warmWhite font-medium">{item.name}</h3>
-                    <p className="text-warmWhite/70 text-sm">Quantity: {item.quantity}</p>
+                    <p className="text-warmWhite/50 text-sm">Quantity: {item.quantity}</p>
                   </div>
-                  <p className="text-gold font-semibold">€{(item.price * item.quantity).toFixed(2)}</p>
+                  <p className="text-gold font-serif">€{(item.price * item.quantity).toFixed(2)}</p>
                 </div>
               ))}
             </div>
-            <div className="mt-6 pt-6 border-t border-emerald/20 flex justify-between items-center">
+            <div className="mt-6 pt-6 border-t border-gold/20 flex justify-between items-center">
               <span className="text-xl font-serif text-warmWhite">Total</span>
               <span className="text-2xl font-serif text-gold">€{getTotalPrice().toFixed(2)}</span>
             </div>
           </div>
 
-          {/* Shipping Address */}
-          <div className="bg-charcoal-light border border-emerald/20 p-6 rounded-lg">
-            <h2 className="text-xl font-serif text-warmWhite mb-4">Shipping Address</h2>
-            <div className="text-warmWhite/80 space-y-1">
-              <p>{checkoutData.address.fullName}</p>
-              <p>{checkoutData.address.addressLine1}</p>
-              {checkoutData.address.addressLine2 && <p>{checkoutData.address.addressLine2}</p>}
-              <p>
-                {checkoutData.address.city}, {checkoutData.address.state} {checkoutData.address.zipCode}
-              </p>
-              <p>{checkoutData.address.country}</p>
-              <p>{checkoutData.address.phone}</p>
-            </div>
-          </div>
-
-          {/* Payment Method */}
-          <div className="bg-charcoal-light border border-emerald/20 p-6 rounded-lg">
-            <h2 className="text-xl font-serif text-warmWhite mb-4">Payment Method</h2>
-            <div className="text-warmWhite/80">
-              <p>Card ending in {checkoutData.paymentData.cardNumber.replace(/\s/g, '').slice(-4)}</p>
-              <p className="text-sm text-warmWhite/60 mt-1">
-                {checkoutData.paymentData.cardHolderName}
-              </p>
-            </div>
-          </div>
-
-          {/* Error Message */}
           {error && (
-            <div className="bg-burgundy/20 border border-burgundy p-4 rounded-lg">
-              <p className="text-warmWhite">{error}</p>
+            <div className="bg-burgundy/10 border border-burgundy/50 p-4 rounded-sm">
+              <p className="text-warmWhite text-sm">{error}</p>
             </div>
           )}
 
-          {/* Place Order Button */}
           <div className="flex gap-4">
-            <button
-              onClick={() => navigate('/checkout/payment')}
-              className="btn-outline flex-1"
-              disabled={isProcessing}
-            >
-              Back
-            </button>
-            <button
-              onClick={handlePlaceOrder}
-              disabled={isProcessing}
-              className="btn-primary flex-1 flex items-center justify-center gap-2"
-            >
-              {isProcessing ? (
-                <>
-                  <Loader2 className="w-5 h-5 animate-spin" />
-                  Processing...
-                </>
-              ) : (
-                <>
-                  <Check className="w-5 h-5" />
-                  Place Order
-                </>
-              )}
+            <button onClick={() => navigate('/checkout/payment')} className="btn-outline flex-1" disabled={isProcessing}>Back</button>
+            <button onClick={handlePlaceOrder} disabled={isProcessing} className="btn-primary flex-1 flex items-center justify-center gap-2">
+              {isProcessing ? <><Loader2 className="w-5 h-5 animate-spin" /> Processing...</> : <><Check className="w-5 h-5" /> Place Order</>}
             </button>
           </div>
         </div>
@@ -210,4 +135,3 @@ const Review = () => {
 };
 
 export default Review;
-

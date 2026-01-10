@@ -66,6 +66,7 @@ exports.updateProfile = async (req, res) => {
       user: {
         id: user._id,
         name: user.name,
+        surname: user.surname,
         email: user.email,
         role: user.role,
       },

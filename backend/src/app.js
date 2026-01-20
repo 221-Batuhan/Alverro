@@ -9,6 +9,7 @@ const userRoutes = require('./routes/userRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const productRoutes = require('./routes/productRoutes');
 const donnaRoutes = require('./routes/donnaRoutes');
+const adminRoutes = require('./routes/admin');
 
 const app = express();
 
@@ -33,7 +34,7 @@ app.use('/api/user', userRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/products', productRoutes);
 app.use('/api/donna', donnaRoutes);
-
+app.use('/api/admin', adminRoutes);
 // Health check
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 

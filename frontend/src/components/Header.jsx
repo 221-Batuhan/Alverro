@@ -45,6 +45,15 @@ const Header = () => {
             >
               New Season
             </Link>
+            {user && user.role === 'admin' && (
+               <Link 
+                 to="/admin" 
+                 className="text-gold hover:text-white transition-colors duration-300 uppercase font-bold border border-gold px-3 py-1"
+               >
+                 Admin Panel
+               </Link>
+            )}
+            {/* ------------------------- */}
             <Link 
               to={user ? "/account" : "/login"} 
               className="text-warmWhite/80 hover:text-gold transition-colors duration-300 uppercase"

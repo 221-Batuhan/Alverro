@@ -27,6 +27,7 @@ import Review from "./pages/checkout/Review";
 import Result from "./pages/checkout/Result";
 import Careers from "./pages/Careers";
 import Shop from "./pages/Shop";
+import AdminRoutes from "./admin/Routes";
 
 const App = () => {
   return (
@@ -42,7 +43,7 @@ const App = () => {
               <Route path="/collections" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">Collections - Coming Soon</h1></div>} />
               <Route path="/new-season" element={<div className="section-padding container-luxury"><h1 className="heading-section text-warmWhite">New Season - Coming Soon</h1></div>} />
               <Route path="/careers" element={<Careers />} />
-              {/* Test Product - Ödeme Testi */}
+              <Route path="/admin/*" element={<AdminRoutes />} />
             
               
               {/* Donna Routes */}
